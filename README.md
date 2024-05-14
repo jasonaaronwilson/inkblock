@@ -11,3 +11,5 @@ A comparison to XWindows protocol is obviously necessary. XWindows is actually h
 # Architecture
 
 We appear to have roughly two basic choices - multiplex a single "connection" (perhaps simply using stdin and stdout connected to pipes) or somehow establish multiple connections (perhaps by launching a proxy for each windows and simply using pipes).
+
+An interesting reason to use a single connection is because it means we can reuse the graphics client stdin/stdout to communicate with the graphics server. Imagine if the first thing printed to STDOUT was some magic number that said "treat my output as inkblock and begin to send me events". The "full screen" launcher would try to make the client behave like an ordinary windowing app, but if launched from a shell inside of a tool like a code editor, now the code editor can control the layout of windows, embed them into the right places, etc. There is a reason the "sixel" format has become popular again...
